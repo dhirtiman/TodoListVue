@@ -45,15 +45,27 @@ export default {
         }
         this.todos.push(todo)
         this.todoText = null;
+        this.saveTodos();
       }
     },
     doneTask(todo) {
       todo.done = !todo.done;
+      this.saveTodos();
     },
     removeTask(todo) {
       this.todos = this.todos.filter((t) => t !== todo)
+      this.saveTodos();
+    },
+    saveTodos() {
+      localStorage.setItem('todos', JSON.stringify(this.todos));
     }
   },
+  created() {
+    const storedTodos = localStorage.getItem('todos')
+    this.todos = storedTodos ? JSON.parse(storedTodos) : []
+
+
+  }
 }
 
 
@@ -64,8 +76,8 @@ export default {
   margin: auto;
   padding: 20px;
   transform: translateY(15vh);
-  
-  
+
+
 
 }
 
